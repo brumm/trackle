@@ -1,0 +1,43 @@
+:local(.Grid) {
+  position: relative;
+}
+
+
+:local(.Row) {
+  position: relative;
+
+  &:not(:first-of-type) {
+    box-shadow: 0 1px 0 #E6E5E6 inset;
+  }
+
+  &:first-of-type {
+    :local(.Timestamp) {
+      display: none;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-bottom: 1px solid #F6F6F6;
+  }
+}
+
+:local(.Timestamp) {
+  position: absolute;
+  top: 0;
+  left: -65px;
+  width: 65px;
+  margin-top: -6px;
+  color: darken(#E6E5E6, 20%);
+  background-color: #fff;
+  letter-spacing: 1px;
+  font-size: 10px;
+  text-align: right;
+  padding-right: 10px;
+  z-index: 4;
+}
+

@@ -1,0 +1,32 @@
+:local(.Date) {
+  text-align: center;
+
+  &.is-today {
+    $highlight-size: 24px;
+    :local(.dayNumber) {
+      color: #fff;
+      position: relative;
+      line-height: $highlight-size + 1;
+      text-align: center;
+      &:before, & {
+        display: inline-block;
+        width: $highlight-size;
+        height: $highlight-size;
+        left: 0;
+        top: 0;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background-color: #f94d3d;
+        z-index: -1;
+        margin-top: 1px;
+      }
+    }
+  }
+}
+
+:local(.dayNumber) {
+  margin-left: 7px;
+}

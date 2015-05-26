@@ -1,0 +1,10 @@
+:local(.Container) {
+  display: flex;
+  flex-shrink: 0;
+}
+
+:local(.Day) {
+  flex-basis: 0;
+  flex-grow: 1;
+  position: relative;
+}

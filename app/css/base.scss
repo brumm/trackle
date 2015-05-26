@@ -1,0 +1,126 @@
+*  {
+  box-sizing: border-box;
+  user-select: none;
+  cursor: default;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.panel-resize-handle {
+  position: relative;
+  background-color: #d9d9d9;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -5px;
+    right: -5px;
+  }
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  font: inherit;
+}
+
+.window-controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin-right: 20px;
+
+  .control + .control {
+    margin-left: 8px;
+  }
+  .control {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #e6e6e6;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) inset;
+  }
+}
+
+.forward-enter {
+  transform: translateX(100%);
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.forward-enter.forward-enter-active {
+  transform: translateX(0%);
+}
+
+.forward-leave {
+  transform: translateX(0%);
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.forward-leave.forward-leave-active {
+  transform: translateX(-100%);
+}
+
+.backward-enter {
+  transform: translateX(-100%);
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.backward-enter.backward-enter-active {
+  transform: translateX(0%);
+}
+
+.backward-leave {
+  transform: translateX(0%);
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.backward-leave.backward-leave-active {
+  transform: translateX(100%);
+}
+
+.indicator-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: tomato;
+  height: 1px;
+  z-index: 5;
+  margin-top: -5px;
+
+  &:after {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 20px;
+    background-color: tomato;
+    box-shadow: 0 0 0 1px white;
+    z-index: 4;
+  }
+  &:before {
+    content: attr(data-time);
+    position: absolute;
+    top: 0;
+    left: -75px;
+    width: 65px;
+    margin-top: -6px;
+    color: tomato;
+    background-color: #fff;
+    box-shadow:
+      -5px -7px 5px #fff,
+      -5px 7px 5px #fff;
+    letter-spacing: 1px;
+    font-size: 10px;
+    text-align: right;
+    padding-right: 10px;
+    z-index: 4;
+  }
+}

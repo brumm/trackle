@@ -1,0 +1,48 @@
+:local(.Container) {
+  height: 45px;
+  padding: 0 13px;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  -webkit-app-region: drag;
+}
+
+:local(.Left), :local(.Center), :local(.Right) {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+:local(.Left)   { justify-content: flex-start; }
+:local(.Center) { justify-content: center;     }
+:local(.Right)  { justify-content: flex-end;   }
+
+:local(.Date) {
+  font-size: 20px;
+}
+:local(.Month) {
+  font-weight: 500;
+}
+:local(.Year) {
+  margin-left: 5px;
+}
+
+:local(.WeekControl) {
+  display: flex;
+  -webkit-app-region: no-drag;
+  &:hover {
+    border-color: #e6e6e6;
+    :local(.Control) + :local(.Control) { border-color: #e6e6e6; }
+  }
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+:local(.Control) {
+  cursor: pointer;
+  padding: 6px 8px 7px;
+  font-size: 12px;
+  margin: 0;
+  &:hover, &:active {
+    background-color: lighten(#e6e6e6, 5%);
+  }
+}
