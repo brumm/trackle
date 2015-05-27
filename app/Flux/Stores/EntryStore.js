@@ -11,9 +11,6 @@ export default class EntryStore extends Store {
     this.register(actionIds.updateEntry, this.handleUpdateEntry);
     this.register(actionIds.removeEntry, this.handleRemoveEntry);
 
-    this.register(actionIds.selectEntry, this.handleSelectEntry);
-    this.register(actionIds.deselectEntry, this.handleDeselectEntry);
-
     this.entryIds = {};
 
     window.foo = this;
@@ -58,25 +55,4 @@ export default class EntryStore extends Store {
   }
 
   handleRemoveEntry() {}
-
-  handleSelectEntry(id) {
-    var entries = this.state.entries;
-    this.setState({
-      selectedEntry: id,
-      entries: entries
-    });
-  }
-
-  handleDeselectEntry(id) {
-    var entries = this.state.entries;
-    this.setState({
-      selectedEntry: null,
-      entries: entries
-    });
-  }
-
-  getSelectedEntry() {
-    return this.state.entries[this.entryIds[this.state.selectedEntry]];
-  }
-
 }

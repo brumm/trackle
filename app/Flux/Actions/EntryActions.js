@@ -12,12 +12,4 @@ export default class EntryActions extends Actions {
   removeEntry(id) {
     return id;
   }
-
-  selectEntry(id) {
-    return id;
-  }
-
-  deselectEntry(id) {
-    return id;
-  }
 }
