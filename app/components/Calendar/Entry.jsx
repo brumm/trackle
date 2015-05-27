@@ -22,6 +22,10 @@ const cardSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     console.log(item, dropResult);
+
+    props.flux.getActions('entries').updateEntry(props.id, {
+      startedAt: moment(dropResult.date, 'YYYY-MM-DD').minutes(moment(props.startedAt).hours() * 60 + moment(props.startedAt).minutes()).format()
+    });
   }
 };
 
