@@ -102,7 +102,11 @@ class Calendar extends React.Component {
               </FluxComponent>
             </DaysList>
           </CSSTransitionGroup>
-          {this.state.timeNow.isoWeek() === this.props.settings.isoWeek && <CurrentTimeIndicator timeNow={this.state.timeNow} entryBaseHeight={this.props.settings.entryBaseHeight} minDuration={this.props.settings.minDuration} />}
+          {this.state.timeNow.isoWeek() === this.props.settings.isoWeek &&
+            <CurrentTimeIndicator ref='currentTimeIndicator'
+              timeNow={this.state.timeNow}
+              entryBaseHeight={this.props.settings.entryBaseHeight}
+              minDuration={this.props.settings.minDuration} />}
         </Grid>
       </div>
     </div>
