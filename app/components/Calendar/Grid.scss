@@ -10,7 +10,7 @@
     box-shadow: 0 1px 0 #E6E5E6 inset;
   }
 
-  &:first-of-type {
+  &:nth-of-type(2) {
     :local(.Timestamp) {
       display: none;
     }
