@@ -6,12 +6,17 @@ import connectToStores from 'flummox/connect';
 
 import styles from './Calendar.scss';
 
+import { Plug } from "react-outlet";
+
 import Grid from './Grid';
 import DaysList from './DaysList';
 import DateHeader from './DateHeader';
 import Entries from './Entries';
 
 var CSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+import { Outlet } from "react-outlet";
+let outletId = Outlet.new_outlet_id();
 
 class CurrentTimeIndicator extends React.Component {
   constructor(props) {
@@ -78,6 +83,7 @@ class Calendar extends React.Component {
 
       <div ref='scrollContainer' style={{flexGrow: 1, overflowY: 'auto', overflowX: 'hidden', paddingLeft: 65, marginTop: 45}}>
         <Grid>
+          <Outlet outletId={outletId} />
           <CSSTransitionGroup transitionName={this.direction}>
             <DaysList settings={this.props.settings} key={this.props.settings.isoWeek} containerStyle={styles.DayListContainerEntries} dayStyle={styles.DayListDayEntries}>
               <FluxComponent connectToStores={{
@@ -88,7 +94,7 @@ class Calendar extends React.Component {
                   entries: store.getEntriesGroupedByIds()
                 })
               }}>
-                <Entries />
+                <Entries outletId={outletId} />
               </FluxComponent>
             </DaysList>
           </CSSTransitionGroup>

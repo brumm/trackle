@@ -28,3 +28,47 @@
   background-color: #d9d9d9;
   color: #333;
 }
+
+:local(.Backdrop) {
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  z-index: 5;
+}
+
+:local(.Popup) {
+  position: absolute;
+  width: 250px;
+  $height: 200px;
+  height: $height;
+  margin-top: -($height / 2);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 6;
+  background-color: #F6F5F6;
+  filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.25));
+  display: flex;
+  flex-direction: column;
+  &:before {
+    content: '';
+    border: 10px solid transparent;
+    border-right: 10px solid #CCCCCC;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    margin-top: -10px;
+    margin-right: 0px;
+  }
+  &:after {
+    content: '';
+    border: 10px solid transparent;
+    border-right: 10px solid #F6F5F6;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    margin-top: -10px;
+    margin-right: -1px;
+  }
+}

@@ -124,3 +124,31 @@ button {
     z-index: 4;
   }
 }
+
+textarea,
+input[type=text] {
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  outline: none;
+  appearance: none;
+  resize: none;
+  height: 40px;
+}
+
+
+.form-control {
+  padding: 8px 15px;
+  display: flex;
+  flex-grow: 1;
+  height: 40px;
+  justify-content: space-between;
+  &, > * {
+    line-height: 38px;
+    flex-grow: 1;
+  }
+  & + & {
+    border-top: 1px solid #DDDCDD;
+  }
+}

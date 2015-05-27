@@ -121,7 +121,7 @@ export default class Entries extends React.Component {
   }
 
   renderEntry(entry, index) {
-    return <Entry flux={this.props.flux} ref={`child-${index}`} key={index} {...entry} />;
+    return <Entry outletId={this.props.outletId} flux={this.props.flux} ref={`child-${index}`} key={index} {...entry} />;
   }
 
   render() {

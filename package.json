@@ -24,6 +24,7 @@
     "randomcolor": "^0.2.0",
     "react": "~0.13.3",
     "react-dnd": "^1.0.0",
+    "react-outlet": "^1.0.1",
     "react-resizable-panel": "file:../react-resizable-panel"
   },
   "devDependencies": {
