@@ -67,6 +67,10 @@ export default class Entries extends React.Component {
   // }
 
   handleDoubleClick(e) {
+    e.stopPropagation();
+    if (e.target != React.findDOMNode(this)) { return; }
+    e.preventDefault();
+
     var startTime = this.calculateStartTime(e.nativeEvent.offsetY);
     this.props.flux.getActions('entries').createEntry({
       startedAt: startTime.format(),
