@@ -59,8 +59,12 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
+    // scroll 9:30 into view
     var scrollTop = this.props.settings.entryBaseHeight * (((10 * 60) - (this.props.settings.minDuration * 2)) / this.props.settings.minDuration);
     this.refs.scrollContainer.getDOMNode().scrollTop = scrollTop;
+    // and, scroll currentTimeIndicator into view, if it isnt
+    React.findDOMNode(this.refs.currentTimeIndicator).scrollIntoViewIfNeeded(true); //center
+
     this.updateTime();
   }
 
