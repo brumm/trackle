@@ -25,10 +25,13 @@ const cardSource = {
     // When dropped on a compatible target, do something
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log(item, dropResult);
+    let timeOffset = props.settings.minDuration * Math.abs(Math.round(dropResult.offsetY / props.settings.entryBaseHeight));
+    let startedAt = moment(dropResult.date, 'YYYY-MM-DD').minutes(moment(props.startedAt).hours() * 60 + moment(props.startedAt).minutes())
+    let method = dropResult.offsetY > 0 ? 'add' : 'subtract';
+    startedAt[method](timeOffset, 'minutes');
 
     props.flux.getActions('entries').updateEntry(props.id, {
-      startedAt: moment(dropResult.date, 'YYYY-MM-DD').minutes(moment(props.startedAt).hours() * 60 + moment(props.startedAt).minutes()).format()
+      startedAt: startedAt.format()
     });
   }
 };

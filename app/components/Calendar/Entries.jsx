@@ -14,8 +14,11 @@ function intersectRect(r1, r2) {
 }
 
 const boxTarget = {
-  drop(props) {
-    return { date: props.moment.format('YYYY-MM-DD') };
+  drop(props, monitor) {
+    return {
+      date: props.moment.format('YYYY-MM-DD'),
+      offsetY: monitor.getDifferenceFromInitialOffset().y
+    };
   }
 };
 
