@@ -1,6 +1,5 @@
 import React from 'react';
 import FluxComponent from 'flummox/component'
-import randomColor from 'randomcolor';
 import moment from 'moment';
 import connectToStores from 'flummox/connect';
 
