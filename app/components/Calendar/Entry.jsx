@@ -10,11 +10,9 @@ var CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 import styles from './Entry.scss';
 
-const cardSource = {
+const entrySource = {
   beginDrag(props) {
-    // Return the data describing the dragged item
-    const item = { id: props.id };
-    return item;
+    return { id: props.id };
   },
 
   endDrag(props, monitor, component) {
@@ -36,7 +34,7 @@ const cardSource = {
   }
 };
 
-@DragSource(Types.ENTRY, cardSource, (connect, monitor) => ({
+@DragSource(Types.ENTRY, entrySource, (connect, monitor) => ({
   // Call this function inside render()
   // to let React DnD handle the drag events:
   connectDragSource: connect.dragSource(),

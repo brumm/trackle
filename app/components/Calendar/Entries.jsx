@@ -13,7 +13,7 @@ function intersectRect(r1, r2) {
            r2.bottom < r1.top);
 }
 
-const boxTarget = {
+const entriesTarget = {
   drop(props, monitor) {
     return {
       date: props.moment.format('YYYY-MM-DD'),
@@ -22,7 +22,7 @@ const boxTarget = {
   }
 };
 
-@DropTarget(Types.ENTRY, boxTarget, (connect, monitor) => ({
+@DropTarget(Types.ENTRY, entriesTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop()
