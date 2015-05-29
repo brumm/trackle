@@ -2,6 +2,7 @@ import React from 'react';
 import { DropTarget } from 'react-dnd';
 import Types from './DragTypes';
 import alphanumeric from 'alphanumeric-id';
+import moment from 'moment';
 
 import styles from './Entries.scss';
 import Entry from './Entry';
@@ -22,16 +23,15 @@ const entriesTarget = {
 }))
 
 export default class Entries extends React.Component {
-  constructor(props) {
-    super(props);
+  renderEntry        = this.renderEntry.bind(this)
+  handleDoubleClick  = this.handleDoubleClick.bind(this)
+  handleMouseDown    = this.handleMouseDown.bind(this)
+  handleMouseMove    = this.handleMouseMove.bind(this)
+  handleMouseUp      = this.handleMouseUp.bind(this)
 
-    this.currentTempId = null;
-
-    this.renderEntry        = this.renderEntry.bind(this);
-    this.handleDoubleClick  = this.handleDoubleClick.bind(this);
-    this.handleMouseDown    = this.handleMouseDown.bind(this);
-    this.handleMouseMove    = this.handleMouseMove.bind(this);
-    this.handleMouseUp      = this.handleMouseUp.bind(this);
+  state = {
+    startedAt: null,
+    duration: null
   }
 
   calculateStartTime(offsetY) {
@@ -88,32 +88,42 @@ export default class Entries extends React.Component {
   handleMouseMove(e) {
     this.deltaY = e.clientY - this.initialY;
 
-    // a continuous drag is in process (currentTempId exists) and it snaps to minDuration
-    if (this.currentTempId !== null && this.deltaY > 0) {
-      var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight) || 1; // may never be zero
-      this.props.flux.getActions('entries').updateEntry(this.currentTempId, {
-        duration: this.props.settings.minDuration * distanceMultiplier
-      });
-    } else {
-      // delta is larger than half of entryBaseHeight and not negative
-      if (Math.abs(this.deltaY) > this.props.settings.entryBaseHeight / 2 && this.deltaY > 0) {
-        var startTime = this.calculateStartTime(e.offsetY - this.deltaY);
-        this.currentTempId = alphanumeric(10);
-
-        this.props.flux.getActions('entries').createEntry({
-          id: this.currentTempId,
-          startedAt: startTime.format(),
-          duration: this.props.settings.minDuration,
-          description: null
+    // a continuous drag is in process (currentTempId exists) and we moved a bit
+    if (this.deltaY > 0) {
+      if (this.state.duration !== null) {
+        var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight) || 1; // may never be zero
+        this.setState({
+          duration: this.props.settings.minDuration * distanceMultiplier
         });
-      };
-    }
+      } else if (Math.abs(this.deltaY) > this.props.settings.entryBaseHeight / 2 && this.deltaY > 0) {
+        // delta is larger than half of entryBaseHeight and not negative
+        var startTime = this.calculateStartTime(e.offsetY - this.deltaY);
+
+        this.setState({
+          startedAt: startTime.format(),
+          duration: this.props.settings.minDuration
+        });
+      }
+    };
   }
 
   handleMouseUp(e) {
-    this.currentTempId = this.deltaY = this.initialY = null;
     document.documentElement.removeEventListener('mousemove', this.handleMouseMove, false);
     document.documentElement.removeEventListener('mouseup', this.handleMouseUp, false);
+
+    if (this.state.duration !== null) {
+      this.props.flux.getActions('entries').createEntry({
+        startedAt: this.state.startedAt,
+        duration: this.state.duration,
+        description: null
+      });
+
+      this.setState({
+        startedAt: null,
+        duration: null
+      });
+    };
+    this.deltaY = this.initialY = null;
   }
 
   renderEntry(entry, index) {
@@ -123,9 +133,16 @@ export default class Entries extends React.Component {
   render() {
     const { canDrop, isOver, connectDropTarget } = this.props;
     const isActive = canDrop && isOver;
+
+    let entries = this.state.duration !== null ?
+      this.props.entries.concat({
+      startedAt: this.state.startedAt,
+      duration: this.state.duration
+    }) : this.props.entries;
+
     return connectDropTarget(
       <ul className={styles.List} onDoubleClick={this.handleDoubleClick} onMouseDown={this.handleMouseDown}>
-        {this.props.entries.map(this.renderEntry)}
+        {entries.map(this.renderEntry)}
       </ul>
     );
   }

@@ -42,14 +42,11 @@ class CurrentTimeIndicator extends React.Component {
 }
 
 class Calendar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.direction = '';
-    this.updateTime = this.updateTime.bind(this);
 
-    this.state = {
-      timeNow: moment()
-    }
+  direction = ''
+  updateTime = this.updateTime.bind(this)
+  state = {
+    timeNow: moment()
   }
 
   updateTime() {

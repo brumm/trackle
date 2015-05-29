@@ -3,11 +3,10 @@ import moment from 'moment';
 import { DragSource } from 'react-dnd';
 import Types from './DragTypes';
 import connectToStores from 'flummox/connect';
+import Textarea from 'react-textarea-autosize';
+import autobind from 'autobind-decorator'
 
 import { Plug } from "react-outlet";
-
-var CSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 import styles from './Entry.scss';
 
 const entrySource = {
@@ -43,22 +42,20 @@ const entrySource = {
 }))
 
 class Entry extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selected: false
-    }
-    this.renderPopup = this.renderPopup.bind(this);
-    this.handleDoubleClick = this.handleDoubleClick.bind(this);
-    this.deselect          = this.deselect.bind(this);
-    this.onChange          = this.onChange.bind(this);
+  state = {
+    selected: false,
+    duration: null,
+    description: null
   }
 
   componentDidMount() {
+    // TODO: This needs to be refreshed on window resize
+    // and also be put into state
     this.rect = React.findDOMNode(this).getBoundingClientRect();
+    this.popupSide = (window.innerWidth - this.rect.right) > 250 ? 'right' : 'left';
   }
 
+  @autobind
   offsetFromTop(start) {
       var mmt = moment(start);
       var mmtMidnight = mmt.clone().startOf('day');
@@ -67,45 +64,77 @@ class Entry extends React.Component {
       return this.props.settings.entryBaseHeight * (diffMinutes / this.props.settings.minDuration);
   }
 
+  @autobind
+  getHeight() {
+    return Math.round(this.offsetFromTop(this.props.startedAt));
+  }
+
+  @autobind
   style() {
     return {
-      height: Math.round((this.props.duration / this.props.settings.minDuration) * this.props.settings.entryBaseHeight),
-      transform: `translateY(${Math.round(this.offsetFromTop(this.props.startedAt))}px)`
+      height: Math.round((this.get('duration') / this.props.settings.minDuration) * this.props.settings.entryBaseHeight),
+      transform: `translateY(${this.getHeight()}px)`
     };
   }
 
+  @autobind
   handleDoubleClick() {
     this.setState({ selected: true });
   }
+  @autobind
   deselect(e) {
-    this.setState({ selected: false });
-  }
-  onChange(e) {
-    let duration = moment(e.target.value, 'LT').hours() * 60 + moment(e.target.value, 'LT').minutes();
-    this.props.flux.getActions('entries').updateEntry(this.props.id, {
-      duration: duration
+    var newProps = ['duration', 'description'].reduce((memo, prop) => {
+      var value = this.state[prop] || this.props[prop];
+      memo[prop] = value;
+      return memo;
+    }, {});
+
+    this.setState({
+      selected: false,
+      duration: null,
+      description: null
     });
+
+    this.props.flux.getActions('entries').updateEntry(this.props.id, newProps);
+  }
+  @autobind
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
+  @autobind
+  get(prop) {
+    return this.state[prop] === null ? this.props[prop] : this.state[prop];
+  }
+
+  @autobind
   renderPopup(startedAt) {
-    if (this.state.selected) {
-      return <Plug key={'foo'} ref='plug' outletId={this.props.outletId}>
-          <div onClick={this.deselect} className={styles.Backdrop} />
-          <div key={'foo'} className={styles.Popup} style={{
-            marginLeft: ((this.rect.left + this.rect.width) - 65) + 5,
-            transform: `translateY(${Math.round(this.offsetFromTop(this.props.startedAt)) + (Math.round((this.props.duration / this.props.settings.minDuration) * this.props.settings.entryBaseHeight)) / 2}px)`
-          }}>
-            <div className="form-control">
-              {`${startedAt.format('DD MMM YYYY')}`}
-              {`${startedAt.format('LT')} - ${startedAt.add(this.props.duration, 'minutes').format('LT')}`}
-            </div>
-            <div className="form-control"><input placeholder='Duration...' type="text" value={startedAt.clone().set({hour: 0, minute: this.props.duration}).format('LT')} onChange={this.onChange} /></div>
-            <div className="form-control"><textarea placeholder='Description...' type="text" value={this.props.description} /></div>
+    return <Plug outletId={this.props.outletId}>
+      {this.state.selected && [
+        <div key={`backdrop-${this.props.id}`} onClick={this.deselect} className={styles.Backdrop} />,
+        <div key={`popup-${this.props.id}`} className={[styles.Popup, this.popupSide].join(' ')} style={{
+          left: this.popupSide === 'right' ? (((this.rect.right) - 65) + 5) : (this.rect.right - this.rect.width - 320),
+          top: (this.getHeight() + (Math.round((this.get('duration') / this.props.settings.minDuration) * this.props.settings.entryBaseHeight)) / 2)
+        }}>
+          <div className="form-control">Project Name</div>
+          <div className="form-control">
+            <Textarea
+              useCacheForDOMMeasurements
+              name='description'
+              style={{maxHeight: window.innerHeight / 2}}
+              placeholder='Add Description...'
+              value={this.get('description')}
+              onChange={this.onChange} />
           </div>
-      </Plug>;
-    } else {
-      return null;
-    };
+            <div className="form-control">
+            {`${startedAt.format('DD MMM YYYY')}`}
+            {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
+          </div>
+          <div className="form-control">
+            <input name='duration' type="range" step="15" min="15" max="480" value={this.get('duration')} onChange={this.onChange} />
+          </div>
+        </div>]}
+    </Plug>;
   }
 
   render() {
@@ -119,10 +148,9 @@ class Entry extends React.Component {
         }}>
           {!isDragging && [
             <div key={1} style={{fontWeight: '400', marginBottom: 10}}>
-              {`${startedAt.format('LT')} - ${startedAt.add(this.props.duration, 'minutes').format('LT')}`}
+              {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
             </div>,
-            <div style={{lineHeight: '12px'}} key={2}>{this.props.description}</div>
-          ]}
+            <div style={{lineHeight: '12px'}} key={2}>{this.props.description}</div>]}
         </div>
 
         {this.renderPopup(startedAt)}

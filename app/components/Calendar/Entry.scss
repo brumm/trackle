@@ -39,36 +39,52 @@
 :local(.Popup) {
   position: absolute;
   width: 250px;
-  $height: 200px;
-  height: $height;
-  margin-top: -($height / 2);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.6) inset,
-    0 0 0 1px rgba(0, 0, 0, 0.1);
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
   border-radius: 5px;
   z-index: 6;
   background-color: #F6F5F6;
-  filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.25));
+  filter:
+    drop-shadow(0px 0px 1px rgba(0,0,0,0.2))
+    drop-shadow(0px 5px 8px rgba(0,0,0,0.25));
   display: flex;
   flex-direction: column;
-  &:before {
-    content: '';
-    border: 10px solid transparent;
-    border-right: 10px solid #CCCCCC;
-    position: absolute;
-    right: 100%;
-    top: 50%;
-    margin-top: -10px;
-    margin-right: 0px;
+  transform: translateY(-50%);
+
+  &.left {
+    transform-origin: 110% 50%;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 25px;
+      height: 25px;
+      transform: rotate(225deg);
+      border-radius: 0 0 0 3px;
+      background-color: #F6F5F6;
+      margin-top: -12px;
+      margin-left: -13px;
+      z-index: -1;
+    }
   }
-  &:after {
-    content: '';
-    border: 10px solid transparent;
-    border-right: 10px solid #F6F5F6;
-    position: absolute;
-    right: 100%;
-    top: 50%;
-    margin-top: -10px;
-    margin-right: -1px;
+
+  &.right {
+    transform-origin: -10% 50%;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      width: 25px;
+      height: 25px;
+      transform: rotate(45deg);
+      border-radius: 0 0 0 3px;
+      background-color: #F6F5F6;
+      margin-top: -12px;
+      margin-right: -13px;
+      z-index: -1;
+    }
   }
+
 }

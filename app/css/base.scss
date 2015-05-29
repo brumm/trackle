@@ -48,6 +48,77 @@ button {
   }
 }
 
+.indicator-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: tomato;
+  height: 1px;
+  z-index: 5;
+  margin-top: -5px;
+
+  &:after {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 20px;
+    background-color: tomato;
+    box-shadow: 0 0 0 1px white;
+    z-index: 4;
+  }
+  &:before {
+    content: attr(data-time);
+    position: absolute;
+    top: 0;
+    left: -75px;
+    width: 65px;
+    margin-top: -6px;
+    color: tomato;
+    background-color: #fff;
+    box-shadow:
+      -5px -7px 10px #fff,
+      -5px 7px 10px #fff;
+    letter-spacing: 1px;
+    font-size: 10px;
+    text-align: right;
+    padding-right: 10px;
+    z-index: 4;
+  }
+}
+
+textarea,
+input[type=text] {
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  outline: none;
+  appearance: none;
+  resize: none;
+  margin: 0;
+  padding: 0;
+}
+textarea {
+  padding: 10px 0;
+}
+
+.form-control {
+  padding: 0 15px;
+  display: flex;
+  flex-grow: 1;
+  min-height: 45px;
+  justify-content: space-between;
+  align-items: center;
+  &, > * { flex-grow: 1; }
+  & + & {
+    border-top: 1px solid #DDDCDD;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  }
+}
+
 .forward-enter {
   transform: translateX(100%);
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -82,73 +153,4 @@ button {
 
 .backward-leave.backward-leave-active {
   transform: translateX(100%);
-}
-
-.indicator-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  background-color: tomato;
-  height: 1px;
-  z-index: 5;
-  margin-top: -5px;
-
-  &:after {
-    position: absolute;
-    left: -3px;
-    top: -3px;
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 20px;
-    background-color: tomato;
-    box-shadow: 0 0 0 1px white;
-    z-index: 4;
-  }
-  &:before {
-    content: attr(data-time);
-    position: absolute;
-    top: 0;
-    left: -75px;
-    width: 65px;
-    margin-top: -6px;
-    color: tomato;
-    background-color: #fff;
-    box-shadow:
-      -5px -7px 5px #fff,
-      -5px 7px 5px #fff;
-    letter-spacing: 1px;
-    font-size: 10px;
-    text-align: right;
-    padding-right: 10px;
-    z-index: 4;
-  }
-}
-
-textarea,
-input[type=text] {
-  background: none;
-  border: none;
-  font: inherit;
-  color: inherit;
-  outline: none;
-  appearance: none;
-  resize: none;
-  height: 40px;
-}
-
-
-.form-control {
-  padding: 8px 15px;
-  display: flex;
-  flex-grow: 1;
-  height: 40px;
-  justify-content: space-between;
-  &, > * {
-    line-height: 38px;
-    flex-grow: 1;
-  }
-  & + & {
-    border-top: 1px solid #DDDCDD;
-  }
 }
