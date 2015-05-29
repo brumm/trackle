@@ -12,6 +12,16 @@
     bottom: 0;
     z-index: 3;
   }
+  &:after {
+    content: '';
+    position: absolute;
+    top: 90px;
+    width: 65px;
+    left: 0;
+    background-image: linear-gradient(white, rgba(255, 255, 255, 0) 20px);
+    height: 16px;
+    z-index: 4;
+  }
 }
 
 :local(.DayListContainerDateHeader):extends(.Container from "./DaysList.scss") {
@@ -26,14 +36,14 @@
   z-index: 1;
   &:before {
     content: '';
-      position: absolute;
-      top: 100%;
-      left: -65px;
-      background-image: linear-gradient(white, rgba(255, 255, 255, 0) 20px);
-      right: 0;
-      height: 16px;
-      z-index: 1;
-      margin-top: 1px;
+    position: absolute;
+    top: 100%;
+    left: -65px;
+    background-image: linear-gradient(white, rgba(255, 255, 255, 0) 20px);
+    right: 0;
+    height: 16px;
+    z-index: 1;
+    margin-top: 1px;
   }
 }
 :local(.DayListDayDateHeader):extends(.Day from "./DaysList.scss") {
