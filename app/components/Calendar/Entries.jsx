@@ -125,7 +125,7 @@ export default class Entries extends React.Component {
     const isActive = canDrop && isOver;
     return connectDropTarget(
       <ul className={styles.List} onDoubleClick={this.handleDoubleClick} onMouseDown={this.handleMouseDown}>
-        {(this.props.entries[this.props.moment.format('YYYY-MM-DD')] || []).map(this.renderEntry)}
+        {this.props.entries.map(this.renderEntry)}
       </ul>
     );
   }

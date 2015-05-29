@@ -79,7 +79,7 @@ class Calendar extends React.Component {
   render() {
     return <div className={styles.Container}>
       <CSSTransitionGroup transitionName={this.direction}>
-        <DaysList settings={this.props.settings} key={this.props.settings.isoWeek} containerStyle={styles.DayListContainerDateHeader} dayStyle={styles.DayListDayDateHeader}>
+        <DaysList key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerDateHeader} dayStyle={styles.DayListDayDateHeader}>
           <DateHeader />
         </DaysList>
       </CSSTransitionGroup>
@@ -87,20 +87,13 @@ class Calendar extends React.Component {
       <div ref='scrollContainer' style={{flexGrow: 1, overflowY: 'auto', overflowX: 'hidden', paddingLeft: 65, marginTop: 45}}>
         <Grid>
           <Outlet outletId={outletId} />
+
           <CSSTransitionGroup transitionName={this.direction}>
-            <DaysList settings={this.props.settings} key={this.props.settings.isoWeek} containerStyle={styles.DayListContainerEntries} dayStyle={styles.DayListDayEntries}>
-              <FluxComponent connectToStores={{
-                settings: store => ({
-                  settings: store.getStateAsObject()
-                }),
-                entries: store => ({
-                  entries: store.getEntriesGroupedByIds()
-                })
-              }}>
-                <Entries outletId={outletId} />
-              </FluxComponent>
+            <DaysList key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerEntries} dayStyle={styles.DayListDayEntries}>
+              <Entries outletId={outletId} />
             </DaysList>
           </CSSTransitionGroup>
+
           {this.state.timeNow.isoWeek() === this.props.settings.isoWeek &&
             <CurrentTimeIndicator ref='currentTimeIndicator'
               timeNow={this.state.timeNow}
