@@ -9,4 +9,4 @@ $ npm install
 $ npm start
 ```
 
-![](http://i.imgur.com/cVrKhX2.png)
+![](http://i.imgur.com/wreAO2p.png)
