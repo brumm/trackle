@@ -137,6 +137,43 @@ class Entry extends React.Component {
     </Plug>;
   }
 
+  @autobind
+  handleMouseDown(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    this.initialY = e.clientY;
+    document.documentElement.addEventListener('mousemove', this.handleMouseMove, false);
+    document.documentElement.addEventListener('mouseup', this.handleMouseUp, false);
+  }
+  @autobind
+  handleMouseMove(e) {
+    this.deltaY = e.clientY - this.initialY;
+    var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight); // should never be zero
+    var duration = this.props.duration + (this.props.settings.minDuration * distanceMultiplier);
+    if (duration >= this.props.settings.minDuration) {
+      this.setState({
+        duration: duration
+      });
+    }
+  }
+  @autobind
+  handleMouseUp() {
+    if (this.state.duration !== null) {
+      this.props.flux.getActions('entries').updateEntry(this.props.id, {
+        duration: this.state.duration,
+      });
+
+      this.setState({
+        duration: null
+      });
+    }
+    document.documentElement.removeEventListener('mousemove', this.handleMouseMove, false);
+    document.documentElement.removeEventListener('mouseup', this.handleMouseUp, false);
+    this.deltaY = this.initialY = null;
+  }
+
+
   render() {
     const { isDragging, connectDragSource } = this.props;
     var startedAt = moment(this.props.startedAt)
@@ -151,9 +188,14 @@ class Entry extends React.Component {
               {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
             </div>,
             <div style={{lineHeight: '12px'}} key={2}>{this.props.description}</div>]}
+            {this.renderPopup(startedAt)}
         </div>
-
-        {this.renderPopup(startedAt)}
+        <div onMouseDown={this.handleMouseDown} className="resize-handle" style={{
+          position: 'absolute',
+          bottom: 0, height: this.props.settings.entryBaseHeight / 2,
+          left: 0, right: 0,
+          cursor: 'ns-resize'
+        }} />
       </li>
     );
   }

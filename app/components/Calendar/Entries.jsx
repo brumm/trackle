@@ -91,7 +91,7 @@ export default class Entries extends React.Component {
     // a continuous drag is in process (currentTempId exists) and we moved a bit
     if (this.deltaY > 0) {
       if (this.state.duration !== null) {
-        var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight) || 1; // may never be zero
+        var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight) || 1; // should never be zero
         this.setState({
           duration: this.props.settings.minDuration * distanceMultiplier
         });
