@@ -70,7 +70,6 @@ class Calendar extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.direction = this.props.settings.isoWeek > newProps.settings.isoWeek ? 'backward' : 'forward';
-    this.previousIsoWeek = newProps.settings.isoWeek;
   }
 
   render() {
