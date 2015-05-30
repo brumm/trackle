@@ -192,7 +192,7 @@ class Entry extends React.Component {
         </div>
         <div onMouseDown={this.handleMouseDown} className="resize-handle" style={{
           position: 'absolute',
-          bottom: 0, height: this.props.settings.entryBaseHeight / 2,
+          bottom: 0, height: this.props.settings.entryBaseHeight / 3,
           left: 0, right: 0,
           cursor: 'ns-resize'
         }} />
