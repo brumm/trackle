@@ -119,38 +119,43 @@ textarea {
   }
 }
 
+$transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+$left: translateX(-100%);
+$center: translateX(0%);
+$right: translateX(100%);
+
 .forward-enter {
-  transform: translateX(100%);
-  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transform: $right;
+  transition: $transition;
 }
 
 .forward-enter.forward-enter-active {
-  transform: translateX(0%);
+  transform: $center;
 }
 
 .forward-leave {
-  transform: translateX(0%);
-  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transform: $center;
+  transition: $transition;
 }
 
 .forward-leave.forward-leave-active {
-  transform: translateX(-100%);
+  transform: $left;
 }
 
 .backward-enter {
-  transform: translateX(-100%);
-  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transform: $left;
+  transition: $transition;
 }
 
 .backward-enter.backward-enter-active {
-  transform: translateX(0%);
+  transform: $center;
 }
 
 .backward-leave {
-  transform: translateX(0%);
-  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transform: $center;
+  transition: $transition;
 }
 
 .backward-leave.backward-leave-active {
-  transform: translateX(100%);
+  transform: $right;
 }
