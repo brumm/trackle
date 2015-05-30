@@ -51,17 +51,6 @@ export default class Entries extends React.Component {
     return mmt.minutes(minDuration * quarter);
   }
 
-  // componentDidUpdate() {
-  //   var refKeys = Object.keys(this.refs);
-  //   for (var i = 0; i < refKeys.length - 1; i++) {
-  //     var r1 = React.findDOMNode(this.refs[refKeys[i]]);
-  //     var r2 = React.findDOMNode(this.refs[refKeys[i + 1]]);
-  //     if (intersectRect(r1.getBoundingClientRect(), r2.getBoundingClientRect())) {
-  //       console.log(r1, r2);
-  //     }
-  //   };
-  // }
-
   handleDoubleClick(e) {
     e.stopPropagation();
     if (e.target != React.findDOMNode(this)) { return; }
