@@ -16,8 +16,7 @@ export default class EntryStore extends Store {
     window.foo = this;
 
     this.state = {
-      entries: [],
-      selectedEntry: null
+      entries: []
     };
   }
 
