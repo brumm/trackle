@@ -3,7 +3,7 @@ import connectToStores from 'flummox/connect';
 
 class DaysList extends React.Component {
 
-  renderWeekdays = this.renderWeekdays.bind(this)
+  renderWeekdays = ::this.renderWeekdays
 
   renderWeekdays() {
     var i, results, weekDay;

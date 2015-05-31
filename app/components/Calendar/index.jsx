@@ -18,12 +18,8 @@ import { Outlet } from "react-outlet";
 let outletId = Outlet.new_outlet_id();
 
 class CurrentTimeIndicator extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.offsetFromTop = this.offsetFromTop.bind(this);
-    this.style = this.style.bind(this);
-  }
+  offsetFromTop = ::this.offsetFromTop
+  style = ::this.style
 
   offsetFromTop() {
     var mmt = this.props.timeNow;
@@ -44,7 +40,7 @@ class CurrentTimeIndicator extends React.Component {
 class Calendar extends React.Component {
 
   direction = ''
-  updateTime = this.updateTime.bind(this)
+  updateTime = ::this.updateTime
   state = {
     timeNow: moment()
   }

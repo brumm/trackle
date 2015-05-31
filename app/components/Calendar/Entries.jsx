@@ -23,11 +23,11 @@ const entriesTarget = {
 }))
 
 export default class Entries extends React.Component {
-  renderEntry        = this.renderEntry.bind(this)
-  handleDoubleClick  = this.handleDoubleClick.bind(this)
-  handleMouseDown    = this.handleMouseDown.bind(this)
-  handleMouseMove    = this.handleMouseMove.bind(this)
-  handleMouseUp      = this.handleMouseUp.bind(this)
+  renderEntry        = ::this.renderEntry
+  handleDoubleClick  = ::this.handleDoubleClick
+  handleMouseDown    = ::this.handleMouseDown
+  handleMouseMove    = ::this.handleMouseMove
+  handleMouseUp      = ::this.handleMouseUp
 
   state = {
     startedAt: null,
