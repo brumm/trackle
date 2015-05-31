@@ -3,8 +3,8 @@ import moment from 'moment';
 import { DragSource } from 'react-dnd';
 import Types from './DragTypes';
 import connectToStores from 'flummox/connect';
-import Textarea from 'react-textarea-autosize';
 import autobind from 'autobind-decorator'
+import Popup from "./Popup";
 
 import { Plug } from "react-outlet";
 import styles from './Entry.scss';
@@ -108,32 +108,18 @@ class Entry extends React.Component {
   }
 
   @autobind
-  renderPopup(startedAt) {
+  renderPopup() {
     return <Plug outletId={this.props.outletId}>
-      {this.state.selected && [
-        <div key={`backdrop-${this.props.id}`} onClick={this.deselect} className={styles.Backdrop} />,
-        <div key={`popup-${this.props.id}`} className={[styles.Popup, this.popupSide].join(' ')} style={{
-          left: this.popupSide === 'right' ? (((this.rect.right) - 65) + 5) : (this.rect.right - this.rect.width - 320),
-          top: (this.getHeight() + (Math.round((this.get('duration') / this.props.settings.minDuration) * this.props.settings.entryBaseHeight)) / 2)
-        }}>
-          <div className="form-control">Project Name</div>
-          <div className="form-control">
-            <Textarea
-              useCacheForDOMMeasurements
-              name='description'
-              style={{maxHeight: window.innerHeight / 2}}
-              placeholder='Add Description...'
-              value={this.get('description')}
-              onChange={this.onChange} />
-          </div>
-            <div className="form-control">
-            {`${startedAt.format('DD MMM YYYY')}`}
-            {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
-          </div>
-          <div className="form-control">
-            <input name='duration' type="range" step="15" min="15" max="480" value={this.get('duration')} onChange={this.onChange} />
-          </div>
-        </div>]}
+      <Popup
+        rect={this.rect}
+        height={this.getHeight()}
+        duration={this.get('duration')}
+        minDuration={this.props.settings.minDuration}
+        entryBaseHeight={this.props.settings.entryBaseHeight}
+        description={this.get('description')}
+        handleChange={this.onChange}
+        deselect={this.deselect}
+        popupSide={this.popupSide} />
     </Plug>;
   }
 
@@ -188,7 +174,7 @@ class Entry extends React.Component {
               {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
             </div>,
             <div style={{lineHeight: '12px'}} key={2}>{this.props.description}</div>]}
-            {this.renderPopup(startedAt)}
+            {this.state.selected && this.renderPopup()}
         </div>
         <div onMouseDown={this.handleMouseDown} className="resize-handle" style={{
           position: 'absolute',
