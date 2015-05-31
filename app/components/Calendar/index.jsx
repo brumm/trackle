@@ -75,7 +75,7 @@ class Calendar extends React.Component {
   render() {
     return <div className={styles.Container}>
       <CSSTransitionGroup transitionName={this.direction}>
-        <DaysList key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerDateHeader} dayStyle={styles.DayListDayDateHeader}>
+        <DaysList timeNow={this.state.timeNow} key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerDateHeader} dayStyle={styles.DayListDayDateHeader}>
           <DateHeader />
         </DaysList>
       </CSSTransitionGroup>
@@ -85,7 +85,7 @@ class Calendar extends React.Component {
           <Outlet outletId={outletId} />
 
           <CSSTransitionGroup transitionName={this.direction}>
-            <DaysList key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerEntries} dayStyle={styles.DayListDayEntries}>
+            <DaysList timeNow={this.state.timeNow} key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerEntries} dayStyle={styles.DayListDayEntries}>
               <Entries outletId={outletId} />
             </DaysList>
           </CSSTransitionGroup>

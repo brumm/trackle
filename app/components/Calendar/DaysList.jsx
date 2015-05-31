@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import connectToStores from 'flummox/connect';
 
 class DaysList extends React.Component {
@@ -11,7 +10,7 @@ class DaysList extends React.Component {
     results = [];
 
     for (weekDay = i = 0; i <= 6; weekDay = ++i) {
-      var day = moment().isoWeek(this.props.isoWeek).weekday(i);
+      var day = this.props.timeNow.clone().isoWeek(this.props.isoWeek).weekday(i);
       var Child = React.Children.only(this.props.children);
 
       results.push(
