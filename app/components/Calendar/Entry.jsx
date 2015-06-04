@@ -99,7 +99,8 @@ class Entry extends React.Component {
   }
   @autobind
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    const value = e.target.dataset.type === 'number' ? parseInt(e.target.value, 10) : e.target.value;
+    this.setState({ [e.target.name]: value });
   }
 
   @autobind

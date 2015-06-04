@@ -24,7 +24,7 @@ class Popup extends React.Component {
           <input name='duration' type="text" value={this.props.duration} onChange={this.props.handleChange} />
         </div>
         <div className="form-control">
-          <input name='duration' type="range" step="15" min="15" max="480" value={this.props.duration} onChange={this.props.handleChange} />
+          <input name='duration' data-type='number' type="range" step="15" min="15" max="480" value={this.props.duration} onChange={this.props.handleChange} />
         </div>
       </div>
     </div>;
