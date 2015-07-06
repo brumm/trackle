@@ -1,12 +1,10 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd/modules/backends/HTML5';
-import FluxComponent from 'flummox/component'
 
 import styles from './Application.scss';
 import Titlebar from './../Titlebar';
 import Calendar from './../Calendar';
-
 
 @DragDropContext(HTML5Backend)
 export default class Application extends React.Component {
