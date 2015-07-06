@@ -90,28 +90,38 @@ button {
 }
 
 textarea,
+select,
 input[type=text] {
   background: none;
   border: none;
+  border-radius: 0;
   font: inherit;
   color: inherit;
   outline: none;
-  appearance: none;
+  -webkit-appearance: none;
   resize: none;
   margin: 0;
   padding: 0;
 }
 textarea {
-  padding: 10px 0;
+  padding: 5px 0;
+}
+select {
+  border-radius: 3px;
+  padding: 5px;
+  margin: 0 -5px;
+  &:hover  {
+    box-shadow: 0 0 0 1px #DDDCDD;
+  }
 }
 
 .form-control {
-  padding: 0 15px;
+  padding: 10px 15px;
   display: flex;
   flex-grow: 1;
   min-height: 45px;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   &, > * { flex-grow: 1; }
   & + & {
     border-top: 1px solid #DDDCDD;

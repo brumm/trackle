@@ -12,7 +12,7 @@ import DateHeader from './DateHeader';
 import Entries from './Entries';
 
 import { Outlet } from "react-outlet";
-let outletId = Outlet.new_outlet_id();
+let entryPopupOutlet = Outlet.new_outlet_id();
 
 class CurrentTimeIndicator extends React.Component {
   offsetFromTop = ::this.offsetFromTop
@@ -48,11 +48,10 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    // scroll 9:30 into view
-    var scrollTop = this.props.settings.entryBaseHeight * (((10 * 60) - (this.props.settings.minDuration * 2)) / this.props.settings.minDuration);
+    var scrollTop = this.props.settings.entryBaseHeight * (((moment(this.props.settings.defaultWorkPeriod.start, 'HH:mm').hours() * 60) - (this.props.settings.minDuration * 2)) / this.props.settings.minDuration);
     this.refs.scrollContainer.getDOMNode().scrollTop = scrollTop;
     // and, scroll currentTimeIndicator into view, if it isnt
-    React.findDOMNode(this.refs.currentTimeIndicator).scrollIntoViewIfNeeded(true); //center
+    React.findDOMNode(this.refs.currentTimeIndicator).scrollIntoViewIfNeeded(true); // center
 
     this.updateTime();
   }
@@ -79,7 +78,7 @@ class Calendar extends React.Component {
 
       <div ref='scrollContainer' style={{flexGrow: 1, overflowY: 'auto', overflowX: 'hidden', paddingLeft: 65, marginTop: 45}}>
         <Grid>
-          <Outlet outletId={outletId} />
+          <Outlet outletId={entryPopupOutlet} />
 
           <DaysList
             timeNow={this.state.timeNow}

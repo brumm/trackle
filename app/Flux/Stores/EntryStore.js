@@ -11,7 +11,7 @@ export default class EntryStore extends Store {
     this.register(actionIds.updateEntry, this.handleUpdateEntry);
     this.register(actionIds.removeEntry, this.handleRemoveEntry);
 
-    this.entryIds = {};
+    this.primaryIndex = {};
 
     window.foo = this;
 
@@ -37,7 +37,7 @@ export default class EntryStore extends Store {
     var entries = this.state.entries;
     var length = entries.push(entry);
 
-    this.entryIds[entry.id] = length - 1;
+    this.primaryIndex[entry.id] = length - 1;
 
     this.setState({
       entries: entries
@@ -46,7 +46,7 @@ export default class EntryStore extends Store {
 
   handleUpdateEntry({id, entry}) {
     var entries = this.state.entries;
-    objectAssign(entries[this.entryIds[id]], entry);
+    objectAssign(entries[this.primaryIndex[id]], entry);
 
     this.setState({
       entries: entries

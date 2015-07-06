@@ -34,6 +34,20 @@ export default class Entries extends React.Component {
     duration: null
   }
 
+  componentDidMount() {
+    const rect = React.findDOMNode(this).getBoundingClientRect();
+    this.setState({
+      rect: rect,
+      popupSide: (window.innerWidth - rect.right) > 250 ? 'right' : 'left'
+    });
+  }
+
+
+  // TODO shallowEqual for entries
+  // shouldComponentUpdate(newProps, newState) {
+  //   return (this.state.duration !== newState.duration) || (this.props.entries.length !== newProps.entries.length);
+  // }
+
   calculateStartTime(offsetY) {
     var decimalTime = (offsetY / (this.props.settings.entryBaseHeight * 4)).toFixed(1)
     var mmt = this.props.moment.clone().set({hour: 0, minute: 0, second: 0}).add(decimalTime, 'hours');
@@ -58,6 +72,7 @@ export default class Entries extends React.Component {
 
     var startTime = this.calculateStartTime(e.nativeEvent.offsetY);
     this.props.flux.getActions('entries').createEntry({
+      selected: true,
       startedAt: startTime.format(),
       duration: 60,
       description: null
@@ -77,7 +92,6 @@ export default class Entries extends React.Component {
   handleMouseMove(e) {
     this.deltaY = e.clientY - this.initialY;
 
-    // a continuous drag is in process (currentTempId exists) and we moved a bit
     if (this.deltaY > 0) {
       if (this.state.duration !== null) {
         var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight) || 1; // should never be zero
@@ -102,6 +116,7 @@ export default class Entries extends React.Component {
 
     if (this.state.duration !== null) {
       this.props.flux.getActions('entries').createEntry({
+        selected: true,
         startedAt: this.state.startedAt,
         duration: this.state.duration,
         description: null
@@ -116,7 +131,14 @@ export default class Entries extends React.Component {
   }
 
   renderEntry(entry, index) {
-    return <Entry outletId={this.props.outletId} flux={this.props.flux} ref={`child-${index}`} key={index} {...entry} />;
+    return <Entry
+      key={index}
+      ref={`child-${index}`}
+      {...entry}
+      rect={this.state.rect}
+      popupSide={this.state.popupSide}
+      outletId={this.props.outletId}
+      flux={this.props.flux} />;
   }
 
   render() {

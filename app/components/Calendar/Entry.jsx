@@ -5,6 +5,7 @@ import Types from './DragTypes';
 import connectToStores from 'flummox/connect';
 import autobind from 'autobind-decorator'
 import Popup from "./Popup";
+import classNames from 'classnames';
 
 import { Plug } from "react-outlet";
 import styles from './Entry.scss';
@@ -34,25 +35,23 @@ const entrySource = {
 };
 
 @DragSource(Types.ENTRY, entrySource, (connect, monitor) => ({
-  // Call this function inside render()
-  // to let React DnD handle the drag events:
   connectDragSource: connect.dragSource(),
-  // You can ask the monitor about the current drag state:
   isDragging: monitor.isDragging()
 }))
 
 class Entry extends React.Component {
+
+  static contextTypes = {
+    flux: React.PropTypes.object.isRequired
+  }
+
   state = {
-    selected: false,
     duration: null,
+    projectId: null,
     description: null
   }
 
   componentDidMount() {
-    // TODO: This needs to be refreshed on window resize
-    // and also be put into state
-    this.rect = React.findDOMNode(this).getBoundingClientRect();
-    this.popupSide = (window.innerWidth - this.rect.right) > 250 ? 'right' : 'left';
   }
 
   @autobind
@@ -79,24 +78,30 @@ class Entry extends React.Component {
 
   @autobind
   handleDoubleClick() {
-    this.setState({ selected: true });
+    this.props.flux.getActions('entries').updateEntry(this.props.id, {
+      selected: true
+    });
   }
+
   @autobind
   deselect(e) {
-    var newProps = ['duration', 'description'].reduce((memo, prop) => {
+    var newProps = ['duration', 'description', 'projectId'].reduce((memo, prop) => {
       var value = this.state[prop] || this.props[prop];
       memo[prop] = value;
       return memo;
-    }, {});
+    }, {
+      selected: false
+    });
 
     this.setState({
-      selected: false,
       duration: null,
+      projectId: null,
       description: null
     });
 
     this.props.flux.getActions('entries').updateEntry(this.props.id, newProps);
   }
+
   @autobind
   onChange(e) {
     const value = e.target.dataset.type === 'number' ? parseInt(e.target.value, 10) : e.target.value;
@@ -112,7 +117,7 @@ class Entry extends React.Component {
   renderPopup() {
     return <Plug outletId={this.props.outletId}>
       <Popup
-        rect={this.rect}
+        projectId={this.get('projectId')}
         height={this.getHeight()}
         duration={this.get('duration')}
         minDuration={this.props.settings.minDuration}
@@ -120,7 +125,8 @@ class Entry extends React.Component {
         description={this.get('description')}
         handleChange={this.onChange}
         deselect={this.deselect}
-        popupSide={this.popupSide} />
+        rect={this.props.rect}
+        popupSide={this.props.popupSide} />
     </Plug>;
   }
 
@@ -133,10 +139,11 @@ class Entry extends React.Component {
     document.documentElement.addEventListener('mousemove', this.handleMouseMove, false);
     document.documentElement.addEventListener('mouseup', this.handleMouseUp, false);
   }
+
   @autobind
   handleMouseMove(e) {
     this.deltaY = e.clientY - this.initialY;
-    var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight); // should never be zero
+    var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight);
     var duration = this.props.duration + (this.props.settings.minDuration * distanceMultiplier);
     if (duration >= this.props.settings.minDuration) {
       this.setState({
@@ -144,6 +151,7 @@ class Entry extends React.Component {
       });
     }
   }
+
   @autobind
   handleMouseUp() {
     if (this.state.duration !== null) {
@@ -160,6 +168,14 @@ class Entry extends React.Component {
     this.deltaY = this.initialY = null;
   }
 
+  getProject() {
+    return this.context.flux.getStore('projects').getProject(this.get('projectId'));
+  }
+
+  className() { return classNames(
+    styles.Body,
+    {'is-new': !this.get('projectId')}
+  )}
 
   render() {
     const { isDragging, connectDragSource } = this.props;
@@ -167,16 +183,19 @@ class Entry extends React.Component {
 
     return connectDragSource(
       <li className={styles.Container} style={this.style()} onDoubleClick={this.handleDoubleClick}>
-        <div className={styles.Body} style={{
-          backgroundColor: isDragging ? 'rgba(0, 0, 0, 0.1)' : null
+        <div className={this.className()} style={{
+          backgroundColor: this.getProject().color,
+          opacity: isDragging ? 0.5 : null
         }}>
           {!isDragging && [
-            <div key={1} style={{fontWeight: '400', marginBottom: 10}}>
+            <div key={2} style={{fontWeight: '400', marginBottom: 10}}>
               {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
             </div>,
-            <div style={{lineHeight: '12px'}} key={2}>{this.props.description}</div>]}
-            {this.state.selected && this.renderPopup()}
+            <div key={3} dangerouslySetInnerHTML={{__html: this.get('description')}} />]}
+
+            {this.props.selected && this.renderPopup()}
         </div>
+
         <div onMouseDown={this.handleMouseDown} className="resize-handle" style={{
           position: 'absolute',
           bottom: 0, height: this.props.settings.entryBaseHeight / 3,

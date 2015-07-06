@@ -3,18 +3,18 @@
   position: absolute;
   width: 100%;
 
-  &:nth-child(12n+1)  :local(.Body) { background-color: transparentize(#FF6A5F, 0.2); }
-  &:nth-child(12n+2)  :local(.Body) { background-color: transparentize(#DBDDC7, 0.2); }
-  &:nth-child(12n+3)  :local(.Body) { background-color: transparentize(#bdc4bb, 0.2); }
-  &:nth-child(12n+4)  :local(.Body) { background-color: transparentize(#118D8F, 0.2); }
-  &:nth-child(12n+5)  :local(.Body) { background-color: transparentize(#00ADB7, 0.2); }
-  &:nth-child(12n+6)  :local(.Body) { background-color: transparentize(#00E0D0, 0.2); }
-  &:nth-child(12n+7)  :local(.Body) { background-color: transparentize(#9DD653, 0.2); }
-  &:nth-child(12n+8)  :local(.Body) { background-color: transparentize(#F0D34F, 0.2); }
-  &:nth-child(12n+9)  :local(.Body) { background-color: transparentize(#B3A971, 0.2); }
-  &:nth-child(12n+10) :local(.Body) { background-color: transparentize(#848779, 0.2); }
-  &:nth-child(12n+11) :local(.Body) { background-color: transparentize(#945579, 0.2); }
-  &:nth-child(12n+12) :local(.Body) { background-color: transparentize(#F8744F, 0.2); }
+  // &:nth-child(12n+1)  :local(.Body) { background-color: transparentize(#FF6A5F, 0.2); }
+  // &:nth-child(12n+2)  :local(.Body) { background-color: transparentize(#DBDDC7, 0.2); }
+  // &:nth-child(12n+3)  :local(.Body) { background-color: transparentize(#bdc4bb, 0.2); }
+  // &:nth-child(12n+4)  :local(.Body) { background-color: transparentize(#118D8F, 0.2); }
+  // &:nth-child(12n+5)  :local(.Body) { background-color: transparentize(#00ADB7, 0.2); }
+  // &:nth-child(12n+6)  :local(.Body) { background-color: transparentize(#00E0D0, 0.2); }
+  // &:nth-child(12n+7)  :local(.Body) { background-color: transparentize(#9DD653, 0.2); }
+  // &:nth-child(12n+8)  :local(.Body) { background-color: transparentize(#F0D34F, 0.2); }
+  // &:nth-child(12n+9)  :local(.Body) { background-color: transparentize(#B3A971, 0.2); }
+  // &:nth-child(12n+10) :local(.Body) { background-color: transparentize(#848779, 0.2); }
+  // &:nth-child(12n+11) :local(.Body) { background-color: transparentize(#945579, 0.2); }
+  // &:nth-child(12n+12) :local(.Body) { background-color: transparentize(#F8744F, 0.2); }
 }
 
 :local(.Body) {
@@ -25,6 +25,9 @@
   box-sizing: border-box;
   padding: 5px;
   overflow: hidden;
-  background-color: #d9d9d9;
+  line-height: 12px;
   color: #333;
+  &.is-new {
+    background-color: rgba(188, 198, 214, 0.35);
+  }
 }
