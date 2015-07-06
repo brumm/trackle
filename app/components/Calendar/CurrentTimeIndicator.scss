@@ -1,0 +1,40 @@
+:local(.IndicatorLine) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: tomato;
+  height: 1px;
+  z-index: 5;
+  margin-top: -5px;
+
+  &:after {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 20px;
+    background-color: tomato;
+    box-shadow: 0 0 0 1px white;
+    z-index: 4;
+  }
+  &:before {
+    content: attr(data-time);
+    position: absolute;
+    top: 0;
+    left: -75px;
+    width: 65px;
+    margin-top: -6px;
+    color: tomato;
+    background-color: #fff;
+    box-shadow:
+      -5px -7px 10px #fff,
+      -5px 7px 10px #fff;
+    letter-spacing: 1px;
+    font-size: 10px;
+    text-align: right;
+    padding-right: 10px;
+    z-index: 4;
+  }
+}
