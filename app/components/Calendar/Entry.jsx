@@ -50,16 +50,13 @@ class Entry extends React.Component {
     description: null
   }
 
-  componentDidMount() {
-  }
-
   offsetFromTop = ::this.offsetFromTop
   offsetFromTop(start) {
-      var mmt = moment(start);
-      var mmtMidnight = mmt.clone().startOf('day');
-      var diffMinutes = mmt.diff(mmtMidnight, 'minutes');
-      diffMinutes -= (moment('00:00', "HH:mm").hours() * 60);
-      return this.props.settings.entryBaseHeight * (diffMinutes / this.props.settings.minDuration);
+    var mmt = moment(start);
+    var mmtMidnight = mmt.clone().startOf('day');
+    var diffMinutes = mmt.diff(mmtMidnight, 'minutes');
+    diffMinutes -= (moment('00:00', "HH:mm").hours() * 60);
+    return this.props.settings.entryBaseHeight * (diffMinutes / this.props.settings.minDuration);
   }
 
   getHeight = ::this.getHeight
