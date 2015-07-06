@@ -13,9 +13,12 @@ export default class SettingsStore extends Store {
     this.state = {
       isoWeek: moment().isoWeek(), // moment().isoWeek()
       locale: 'de', // navigator.language
-      entryBaseHeight: 22, // px
-      defaultWorkPeriod: ["09:00", "19:00"], // should be actual amount
-      minDuration: 15 // minutes, should be project-specific?
+      entryBaseHeight: 25, // px
+      defaultWorkPeriod: {
+        start: "10:00",
+        end: "18:00"
+      },
+      minDuration: 15
     };
 
     moment.locale(this.state.locale);

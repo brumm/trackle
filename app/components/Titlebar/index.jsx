@@ -53,4 +53,4 @@ class Titlebar extends React.Component {
 
 Titlebar.contextTypes = { flux: React.PropTypes.object.isRequired };
 
-export default connectToStores(Titlebar, {settings: store => ({settings: store.getStateAsObject()}) });
+export default connectToStores(Titlebar, {settings: store => ({settings: store.getStateAsObject()}) })

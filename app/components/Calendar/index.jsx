@@ -37,11 +37,11 @@ class CurrentTimeIndicator extends React.Component {
 class Calendar extends React.Component {
 
   direction = ''
-  updateTime = ::this.updateTime
   state = {
     timeNow: moment()
   }
 
+  updateTime = ::this.updateTime
   updateTime() {
     this.setState({ timeNow: moment() });
     this.timeoutId = setTimeout(this.updateTime, (60 - (new Date()).getSeconds()) * 1000 + 5);
