@@ -173,7 +173,7 @@ class Entry extends React.Component {
   }
 
   className() { return classNames(
-    styles.Body,
+    styles.Entry,
     {'is-new': !this.get('projectId')}
   )}
 
@@ -188,7 +188,7 @@ class Entry extends React.Component {
           opacity: isDragging ? 0.5 : null
         }}>
           {!isDragging && [
-            <div key={2} style={{fontWeight: '400', marginBottom: 10}}>
+            <div key={2} className={styles.Header}>
               {`${startedAt.format('LT')} - ${startedAt.clone().add(this.get('duration'), 'minutes').format('LT')}`}
             </div>,
             <div key={3} dangerouslySetInnerHTML={{__html: this.get('description')}} />]}
@@ -196,11 +196,8 @@ class Entry extends React.Component {
             {this.props.selected && this.renderPopup()}
         </div>
 
-        <div onMouseDown={this.handleMouseDown} className="resize-handle" style={{
-          position: 'absolute',
-          bottom: 0, height: this.props.settings.entryBaseHeight / 3,
-          left: 0, right: 0,
-          cursor: 'ns-resize'
+        <div onMouseDown={this.handleMouseDown} className={styles.ResizeHandle} style={{
+          height: this.props.settings.entryBaseHeight / 3,
         }} />
       </li>
     );

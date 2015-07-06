@@ -24,17 +24,17 @@ class Titlebar extends React.Component {
   render() {
     return <div className={styles.Container}>
       <div className={styles.Left}>
-        <div className="window-controls">
-          <div className="close control"></div>
-          <div className="minimize control"></div>
-          <div className="fullscreen control"></div>
+        <div className={styles.WindowControls}>
+          <div className={styles.Control}></div>
+          <div className={styles.Control}></div>
+          <div className={styles.Control}></div>
         </div>
 
         <div className={styles.Date}>
           <span className={styles.Month}>{moment().isoWeek(this.props.settings.isoWeek).format('MMMM')}</span>
           <span className={styles.Year}>{moment().isoWeek(this.props.settings.isoWeek).format('YYYY')}</span>
         </div>
-        <span style={{marginLeft: 10}}>CW {moment().isoWeek(this.props.settings.isoWeek).isoWeek()}</span>
+        <span className={styles.CalendarWeek}>CW {moment().isoWeek(this.props.settings.isoWeek).isoWeek()}</span>
       </div>
 
       <div className={styles.Center}></div>

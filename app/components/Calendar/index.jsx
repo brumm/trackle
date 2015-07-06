@@ -57,7 +57,7 @@ class Calendar extends React.Component {
         <DateHeader />
       </DaysList>
 
-      <div ref='scrollContainer' style={{flexGrow: 1, overflowY: 'auto', overflowX: 'hidden', paddingLeft: 65, marginTop: 45}}>
+      <div ref='scrollContainer' className={styles.ScrollContainer}>
         <Grid>
           <Outlet outletId={entryPopupOutlet} />
 

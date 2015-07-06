@@ -35,14 +35,39 @@
   }
   border: 1px solid transparent;
   border-radius: 3px;
-}
 
-:local(.Control) {
-  cursor: pointer;
-  padding: 6px 8px 7px;
-  font-size: 12px;
-  margin: 0;
-  &:hover, &:active {
-    background-color: lighten(#e6e6e6, 5%);
+  :local(.Control) {
+    cursor: pointer;
+    padding: 6px 8px 7px;
+    font-size: 12px;
+    margin: 0;
+    &:hover, &:active {
+      background-color: lighten(#e6e6e6, 5%);
+    }
   }
 }
+
+
+:local(.CalendarWeek) {
+  margin-left: 10px;
+}
+
+:local(.WindowControls) {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin-right: 20px;
+
+  :local(.Control) {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #e6e6e6;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) inset;
+  }
+
+  :local(.Control) + :local(.Control) {
+    margin-left: 8px;
+  }
+}
+

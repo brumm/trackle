@@ -67,3 +67,11 @@
     background-color: rgba(245,245,245,0.2);
   }
 }
+
+:local(.ScrollContainer) {
+  flex-grow: 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 65px;
+  margin-top: 45px;
+}

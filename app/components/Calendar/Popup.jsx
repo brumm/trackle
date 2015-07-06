@@ -6,19 +6,19 @@ import connectToStores from 'flummox/connect';
 class Popup extends React.Component {
   render() {
     return <div>
-      <div key={`backdrop-${this.props.id}`} onClick={this.props.deselect} className={styles.Backdrop} />
+      <div key='backdrop' onClick={this.props.deselect} className={styles.Backdrop} />
 
-      <div key={`popup-${this.props.id}`} className={[styles.Popup, this.props.popupSide].join(' ')} style={{
+      <div key='popup' className={[styles.Popup, this.props.popupSide].join(' ')} style={{
         left: this.props.popupSide === 'right' ? (((this.props.rect.right) - 65) + 5) : (this.props.rect.right - this.props.rect.width - 320),
         top: (this.props.height + (Math.round((this.props.duration / this.props.minDuration) * this.props.entryBaseHeight)) / 2)
       }}>
-        <div className="form-control">
+        <div className={styles.FormControl}>
           <select value={this.props.projectId || null} name='projectId' onChange={this.props.handleChange}>
             <option value={null}>Project...</option>
             {this.props.projects.map((project) => (<option key={project.id} value={project.id}>{project.name}</option>))}
           </select>
         </div>
-        <div className="form-control">
+        <div className={styles.FormControl}>
           <Textarea
             useCacheForDOMMeasurements
             name='description'
@@ -30,10 +30,10 @@ class Popup extends React.Component {
             value={this.props.description}
             onChange={this.props.handleChange} />
         </div>
-        <div className="form-control">
+        <div className={styles.FormControl}>
           <input name='duration' data-type='number' type="text" value={this.props.duration} onChange={this.props.handleChange} />
         </div>
-        <div className="form-control">
+        <div className={styles.FormControl}>
           <input name='duration' data-type='number' type="range" step="15" min="15" max="480" value={this.props.duration} onChange={this.props.handleChange} />
         </div>
       </div>
