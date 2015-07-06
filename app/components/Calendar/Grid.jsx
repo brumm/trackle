@@ -32,7 +32,7 @@ class Grid extends React.Component {
   render() {
     return <div className={styles.Grid}>
       {this.props.children}
-      {this.createRows()}
+      <div className="grid-rows">{this.createRows()}</div>
     </div>;
   }
 }

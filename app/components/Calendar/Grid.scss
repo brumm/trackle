@@ -6,11 +6,11 @@
 :local(.Row) {
   position: relative;
 
-  &:not(:first-of-type) {
+  &:not(:first-child) {
     box-shadow: 0 1px 0 #E6E5E6 inset;
   }
 
-  &:nth-of-type(2) {
+  &:first-child {
     :local(.Timestamp) {
       display: none;
     }
