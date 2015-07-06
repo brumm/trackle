@@ -12,8 +12,6 @@ import DaysList from './DaysList';
 import DateHeader from './DateHeader';
 import Entries from './Entries';
 
-var CSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 import { Outlet } from "react-outlet";
 let outletId = Outlet.new_outlet_id();
 
@@ -70,21 +68,29 @@ class Calendar extends React.Component {
 
   render() {
     return <div className={styles.Container}>
-      <CSSTransitionGroup transitionName={this.direction}>
-        <DaysList timeNow={this.state.timeNow} key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerDateHeader} dayStyle={styles.DayListDayDateHeader}>
-          <DateHeader />
-        </DaysList>
-      </CSSTransitionGroup>
+      <DaysList
+        timeNow={this.state.timeNow}
+        key={this.props.settings.isoWeek}
+        isoWeek={this.props.settings.isoWeek}
+        containerStyle={styles.DayListContainerDateHeader}
+        dayStyle={styles.DayListDayDateHeader}>
+
+        <DateHeader />
+      </DaysList>
 
       <div ref='scrollContainer' style={{flexGrow: 1, overflowY: 'auto', overflowX: 'hidden', paddingLeft: 65, marginTop: 45}}>
         <Grid>
           <Outlet outletId={outletId} />
 
-          <CSSTransitionGroup transitionName={this.direction}>
-            <DaysList timeNow={this.state.timeNow} key={this.props.settings.isoWeek} isoWeek={this.props.settings.isoWeek} containerStyle={styles.DayListContainerEntries} dayStyle={styles.DayListDayEntries}>
-              <Entries outletId={outletId} />
-            </DaysList>
-          </CSSTransitionGroup>
+          <DaysList
+            timeNow={this.state.timeNow}
+            key={this.props.settings.isoWeek}
+            isoWeek={this.props.settings.isoWeek}
+            containerStyle={styles.DayListContainerEntries}
+            dayStyle={styles.DayListDayEntries}>
+
+            <Entries outletId={entryPopupOutlet} />
+          </DaysList>
 
           {this.state.timeNow.isoWeek() === this.props.settings.isoWeek &&
             <CurrentTimeIndicator ref='currentTimeIndicator'
