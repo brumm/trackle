@@ -1,23 +1,22 @@
 import React from 'react';
 import connectToStores from 'flummox/connect';
 import moment from 'moment';
-import autobind from 'autobind-decorator'
 
 import styles from './Titlebar.scss';
 
 class Titlebar extends React.Component {
 
-  @autobind
+  onDecrementIsoWeek = ::this.onDecrementIsoWeek
   onDecrementIsoWeek() {
     this.context.flux.getActions('settings').decrementIsoWeek();
   }
 
-  @autobind
+  onResetIsoWeek = ::this.onResetIsoWeek
   onResetIsoWeek()     {
     this.context.flux.getActions('settings').resetIsoWeek();
   }
 
-  @autobind
+  onIncrementIsoWeek = ::this.onIncrementIsoWeek
   onIncrementIsoWeek() {
     this.context.flux.getActions('settings').incrementIsoWeek();
   }

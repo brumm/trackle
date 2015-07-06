@@ -3,7 +3,6 @@ import moment from 'moment';
 import { DragSource } from 'react-dnd';
 import Types from './DragTypes';
 import connectToStores from 'flummox/connect';
-import autobind from 'autobind-decorator'
 import Popup from "./Popup";
 import classNames from 'classnames';
 
@@ -54,7 +53,7 @@ class Entry extends React.Component {
   componentDidMount() {
   }
 
-  @autobind
+  offsetFromTop = ::this.offsetFromTop
   offsetFromTop(start) {
       var mmt = moment(start);
       var mmtMidnight = mmt.clone().startOf('day');
@@ -63,12 +62,12 @@ class Entry extends React.Component {
       return this.props.settings.entryBaseHeight * (diffMinutes / this.props.settings.minDuration);
   }
 
-  @autobind
+  getHeight = ::this.getHeight
   getHeight() {
     return Math.round(this.offsetFromTop(this.props.startedAt));
   }
 
-  @autobind
+  style = ::this.style
   style() {
     return {
       height: Math.round((this.get('duration') / this.props.settings.minDuration) * this.props.settings.entryBaseHeight),
@@ -76,14 +75,14 @@ class Entry extends React.Component {
     };
   }
 
-  @autobind
+  handleDoubleClick = ::this.handleDoubleClick
   handleDoubleClick() {
     this.props.flux.getActions('entries').updateEntry(this.props.id, {
       selected: true
     });
   }
 
-  @autobind
+  deselect = ::this.deselect
   deselect(e) {
     var newProps = ['duration', 'description', 'projectId'].reduce((memo, prop) => {
       var value = this.state[prop] || this.props[prop];
@@ -102,35 +101,36 @@ class Entry extends React.Component {
     this.props.flux.getActions('entries').updateEntry(this.props.id, newProps);
   }
 
-  @autobind
+  onChange = ::this.onChange
   onChange(e) {
     const value = e.target.dataset.type === 'number' ? parseInt(e.target.value, 10) : e.target.value;
     this.setState({ [e.target.name]: value });
   }
 
-  @autobind
+  get = ::this.get
   get(prop) {
     return this.state[prop] === null ? this.props[prop] : this.state[prop];
   }
 
-  @autobind
+  renderPopup = ::this.renderPopup
   renderPopup() {
-    return <Plug outletId={this.props.outletId}>
-      <Popup
-        projectId={this.get('projectId')}
-        height={this.getHeight()}
-        duration={this.get('duration')}
-        minDuration={this.props.settings.minDuration}
-        entryBaseHeight={this.props.settings.entryBaseHeight}
-        description={this.get('description')}
-        handleChange={this.onChange}
-        deselect={this.deselect}
-        rect={this.props.rect}
-        popupSide={this.props.popupSide} />
-    </Plug>;
+    return (
+      <Plug outletId={this.props.outletId}>
+        <Popup
+          projectId={this.get('projectId')}
+          height={this.getHeight()}
+          duration={this.get('duration')}
+          minDuration={this.props.settings.minDuration}
+          entryBaseHeight={this.props.settings.entryBaseHeight}
+          description={this.get('description')}
+          handleChange={this.onChange}
+          deselect={this.deselect}
+          rect={this.props.rect}
+          popupSide={this.props.popupSide} />
+    </Plug>);
   }
 
-  @autobind
+  handleMouseDown = ::this.handleMouseDown
   handleMouseDown(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -140,7 +140,7 @@ class Entry extends React.Component {
     document.documentElement.addEventListener('mouseup', this.handleMouseUp, false);
   }
 
-  @autobind
+  handleMouseMove = ::this.handleMouseMove
   handleMouseMove(e) {
     this.deltaY = e.clientY - this.initialY;
     var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight);
@@ -152,7 +152,7 @@ class Entry extends React.Component {
     }
   }
 
-  @autobind
+  handleMouseUp = ::this.handleMouseUp
   handleMouseUp() {
     if (this.state.duration !== null) {
       this.props.flux.getActions('entries').updateEntry(this.props.id, {

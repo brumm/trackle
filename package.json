@@ -16,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "alphanumeric-id": "^1.0.0",
-    "autobind-decorator": "^1.2.0",
     "classnames": "^2.1.1",
     "flummox": "^4.0.0-alpha2",
     "moment": "^2.10.3",
