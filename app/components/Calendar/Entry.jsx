@@ -104,6 +104,11 @@ class Entry extends React.Component {
     this.setState({ [e.target.name]: value });
   }
 
+  onDelete = ::this.onDelete
+  onDelete(e) {
+    this.props.flux.getActions('entries').removeEntry(this.props.id);
+  }
+
   get = ::this.get
   get(prop) {
     return this.state[prop] === null ? this.props[prop] : this.state[prop];
@@ -121,6 +126,7 @@ class Entry extends React.Component {
           entryBaseHeight={this.props.settings.entryBaseHeight}
           description={this.get('description')}
           handleChange={this.onChange}
+          handleDelete={this.onDelete}
           deselect={this.deselect}
           rect={this.props.rect}
           popupSide={this.props.popupSide} />

@@ -36,6 +36,9 @@ class Popup extends React.Component {
         <div className={styles.FormControl}>
           <input name='duration' data-type='number' type="range" step="15" min="15" max="480" value={this.props.duration} onChange={this.props.handleChange} />
         </div>
+        <div className={styles.FormControl}>
+          <button onClick={this.props.handleDelete} className={styles.DeleteButton}>Delete</button>
+        </div>
       </div>
     </div>;
   }

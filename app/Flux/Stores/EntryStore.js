@@ -34,24 +34,26 @@ export default class EntryStore extends Store {
 
   handleCreateEntry(entry) {
     entry.id = entry.id || alphanumeric(10);
-    var entries = this.state.entries;
-    var length = entries.push(entry);
+    let {entries} = this.state;
+    let length = entries.push(entry);
 
     this.primaryIndex[entry.id] = length - 1;
 
-    this.setState({
-      entries: entries
-    });
+    this.setState({ entries });
   }
 
   handleUpdateEntry({id, entry}) {
-    var entries = this.state.entries;
+    let {entries} = this.state;
     objectAssign(entries[this.primaryIndex[id]], entry);
 
-    this.setState({
-      entries: entries
-    });
+    this.setState({ entries });
   }
 
-  handleRemoveEntry() {}
+  handleRemoveEntry(id) {
+    let {entries} = this.state;
+    delete entries[this.primaryIndex[id]];
+    delete this.primaryIndex[id];
+
+    this.setState({ entries });
+  }
 }
