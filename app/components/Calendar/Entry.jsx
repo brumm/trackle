@@ -50,25 +50,21 @@ class Entry extends React.Component {
     description: null
   }
 
-  offsetFromTop = ::this.offsetFromTop
-  offsetFromTop(start) {
-    var mmt = moment(start);
-    var mmtMidnight = mmt.clone().startOf('day');
-    var diffMinutes = mmt.diff(mmtMidnight, 'minutes');
-    diffMinutes -= (moment('00:00', "HH:mm").hours() * 60);
-    return this.props.settings.entryBaseHeight * (diffMinutes / this.props.settings.minDuration);
+  getTopOffset = ::this.getTopOffset
+  getTopOffset() {
+    return Math.round(this.props.getTopOffset(this.props.startedAt));
   }
 
   getHeight = ::this.getHeight
   getHeight() {
-    return Math.round(this.offsetFromTop(this.props.startedAt));
+    return this.props.getHeight(this.get('duration'));
   }
 
   style = ::this.style
   style() {
     return {
-      height: Math.round((this.get('duration') / this.props.settings.minDuration) * this.props.settings.entryBaseHeight),
-      transform: `translateY(${this.getHeight()}px)`
+      height: this.getHeight(),
+      transform: `translateY(${this.getTopOffset()}px)`
     };
   }
 
@@ -120,15 +116,15 @@ class Entry extends React.Component {
       <Plug outletId={this.props.outletId}>
         <Popup
           projectId={this.get('projectId')}
-          height={this.getHeight()}
           duration={this.get('duration')}
-          minDuration={this.props.settings.minDuration}
-          entryBaseHeight={this.props.settings.entryBaseHeight}
           description={this.get('description')}
+          topOffset={this.getTopOffset()}
+          entryHeight={this.getHeight()}
           handleChange={this.onChange}
           handleDelete={this.onDelete}
           deselect={this.deselect}
           rect={this.props.rect}
+          projects={this.props.projects}
           popupSide={this.props.popupSide} />
     </Plug>);
   }
@@ -172,7 +168,7 @@ class Entry extends React.Component {
   }
 
   getProject() {
-    return this.context.flux.getStore('projects').getProject(this.get('projectId'));
+    return this.props.getProject(this.get('projectId'));
   }
 
   className() { return classNames(
@@ -207,4 +203,14 @@ class Entry extends React.Component {
   }
 }
 
-export default connectToStores(Entry, { settings: store => ({settings: store.getStateAsObject()}) });
+export default connectToStores(Entry, {
+  settings: store => ({
+    settings: store.getStateAsObject(),
+    getTopOffset: store.getTopOffset,
+    getHeight: store.getHeight
+  }),
+  projects: store => ({
+    projects: store.getStateAsObject().projects,
+    getProject: store.getProject
+  })
+});

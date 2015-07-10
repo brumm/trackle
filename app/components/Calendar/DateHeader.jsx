@@ -3,9 +3,6 @@ import styles from './DateHeader.scss';
 import classNames from 'classnames';
 
 export default class DateHeader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   className() { return classNames(
     styles.Date,

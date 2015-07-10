@@ -33,4 +33,17 @@ export default class SettingsStore extends Store {
   handleIncrementIsoWeek() {
     this.setState({ isoWeek: this.state.isoWeek + 1 });
   }
+
+  getTopOffset = ::this.getTopOffset
+  getTopOffset(startTime) {
+    startTime = startTime._isAMomentObject ? startTime : moment(startTime);
+    var midnight = startTime.clone().startOf('day');
+    var diffMinutes = startTime.diff(midnight, 'minutes');
+    return this.state.entryBaseHeight * (diffMinutes / this.state.minDuration);
+  }
+
+  getHeight = ::this.getHeight
+  getHeight(duration) {
+    return (duration / this.state.minDuration) * this.state.entryBaseHeight;
+  }
 }

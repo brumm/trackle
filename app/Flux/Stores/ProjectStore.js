@@ -45,6 +45,7 @@ export default class ProjectStore extends Store {
     });
   }
 
+  getProject = ::this.getProject
   getProject(id) {
     return this.state.projects[this.primaryIndex[id]] || {};
   }
