@@ -55,9 +55,8 @@ export default class Entries extends React.Component {
 
     var baseHeight = this.props.settings.entryBaseHeight;
     var minDuration = this.props.settings.minDuration;
-    var quarter;
+    var quarter = 0;
 
-    if (minutes >= (minDuration * 0) && minutes <= (minDuration * 1)) { quarter = 0 }
     if (minutes >= (minDuration * 1) && minutes <= (minDuration * 2)) { quarter = 1 }
     if (minutes >= (minDuration * 2) && minutes <= (minDuration * 3)) { quarter = 2 }
     if (minutes >= (minDuration * 3) && minutes <= (minDuration * 4)) { quarter = 3 }
