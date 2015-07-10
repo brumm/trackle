@@ -106,8 +106,8 @@ class Entry extends React.Component {
   }
 
   get = ::this.get
-  get(prop) {
-    return this.state[prop] === null ? this.props[prop] : this.state[prop];
+  get(attribute) {
+    return this.state[attribute] === null ? this.props[attribute] : this.state[attribute];
   }
 
   renderPopup = ::this.renderPopup
