@@ -48,7 +48,7 @@ export default class Entries extends React.Component {
   //   return (this.state.duration !== newState.duration) || (this.props.entries.length !== newProps.entries.length);
   // }
 
-  calculateStartTime(offsetY) {
+  calculateStartTimeFromPixelOffset(offsetY) {
     var decimalTime = (offsetY / (this.props.settings.entryBaseHeight * 4)).toFixed(1)
     var mmt = this.props.moment.clone().set({hour: 0, minute: 0, second: 0}).add(decimalTime, 'hours');
     var minutes = mmt.get('minutes');
@@ -69,7 +69,7 @@ export default class Entries extends React.Component {
     if (e.target != React.findDOMNode(this)) { return; }
     e.preventDefault();
 
-    var startTime = this.calculateStartTime(e.nativeEvent.offsetY);
+    var startTime = this.calculateStartTimeFromPixelOffset(e.nativeEvent.offsetY);
     this.props.flux.getActions('entries').createEntry({
       selected: true,
       startedAt: startTime.format(),
@@ -99,7 +99,7 @@ export default class Entries extends React.Component {
         });
       } else if (Math.abs(this.deltaY) > this.props.settings.entryBaseHeight / 2 && this.deltaY > 0) {
         // delta is larger than half of entryBaseHeight and not negative
-        var startTime = this.calculateStartTime(e.offsetY - this.deltaY);
+        var startTime = this.calculateStartTimeFromPixelOffset(e.offsetY - this.deltaY);
 
         this.setState({
           startedAt: startTime.format(),
