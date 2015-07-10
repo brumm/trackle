@@ -33,7 +33,7 @@ export default class EntryStore extends Store {
   }
 
   handleCreateEntry(entry) {
-    entry.id = entry.id || alphanumeric(10);
+    entry.id = alphanumeric(10);
     let {entries} = this.state;
     let length = entries.push(entry);
 
