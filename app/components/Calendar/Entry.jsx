@@ -145,9 +145,7 @@ class Entry extends React.Component {
     var distanceMultiplier = Math.round(this.deltaY / this.props.settings.entryBaseHeight);
     var duration = this.props.duration + (this.props.settings.minDuration * distanceMultiplier);
     if (duration >= this.props.settings.minDuration) {
-      this.setState({
-        duration: duration
-      });
+      this.setState({ duration });
     }
   }
 
