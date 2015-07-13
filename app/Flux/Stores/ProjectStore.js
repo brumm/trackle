@@ -16,11 +16,11 @@ export default class ProjectStore extends Store {
     this.register(actionIds.createProject, this.handleCreateProject);
     this.register(actionIds.updateProject, this.handleUpdateProject);
 
-    this.handleCreateProject({name: "Makerist"});
-    this.handleCreateProject({name: "ILPT"});
+    this.handleCreateProject({name: "Microsoft"});
+    this.handleCreateProject({name: "Apple"});
     this.handleCreateProject({name: "20%"});
-    this.handleCreateProject({name: "Railslove"});
-    this.handleCreateProject({name: "Flexboxapp"});
+    this.handleCreateProject({name: "Google"});
+    this.handleCreateProject({name: "Tesla"});
   }
 
   handleCreateProject(project) {
